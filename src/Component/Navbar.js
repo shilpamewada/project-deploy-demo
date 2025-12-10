@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Dropdown } from 'react-bootstrap'; // Import Dropdown component
 
 function Navbar() {
-
   const navigate = useNavigate();
 
   const handleLogout = () => {

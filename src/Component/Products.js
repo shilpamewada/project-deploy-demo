@@ -6,7 +6,7 @@ function Products({ addToCart }) { // Accept addToCart as a prop
     const [data, setData] = useState([]);
     const [filter, setFilter] = useState(data);
     const [loading, setLoading] = useState(false);
-    let componentMounted = useRef (true);
+    const componentMounted = useRef (true);
 
     useEffect(() => {
         const getProducts = async () => {
