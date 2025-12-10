@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Button } from 'react-bootstrap';
 
@@ -6,19 +6,19 @@ function Products({ addToCart }) { // Accept addToCart as a prop
     const [data, setData] = useState([]);
     const [filter, setFilter] = useState(data);
     const [loading, setLoading] = useState(false);
-    let componentMounted = useRef (true);
+    let componentMounted = true;
 
     useEffect(() => {
         const getProducts = async () => {
             setLoading(true);
             const response = await fetch("https://fakestoreapi.com/products");
-            if (componentMounted.current) {
+            if (componentMounted) {
                 setData(await response.clone().json());
                 setFilter(await response.json());
                 setLoading(false);
             }
             return () => {
-                componentMounted.current = false;
+                componentMounted = false;
             }
         }
         getProducts();
@@ -51,13 +51,14 @@ function Products({ addToCart }) { // Accept addToCart as a prop
     const ShowProducts = () => {
         return (
             <>
-                <div className="buttons  d-flex justify-content-center mb-5 pb-5">
-                    <button className="btn btn-outline-dark me-2" onClick={() => setFilter(data)}>All</button>
-                    <button className="btn btn-outline-dark me-2" onClick={() => filterProduct("men's clothing")}>Men's Clothing</button>
-                    <button className="btn btn-outline-dark me-2" onClick={() => filterProduct("women's clothing")}>Women's Clothing</button>
-                    <button className="btn btn-outline-dark me-2" onClick={() => filterProduct("electronics")}>Electronic</button>
-                    <button className="btn btn-outline-dark me-2" onClick={() => filterProduct("jewelery")}>Jewelery</button>
-                </div>
+               <div className="buttons d-flex flex-wrap justify-content-center gap-2 mb-5 pb-5 text-center">
+    <button className="btn btn-outline-dark" onClick={() => setFilter(data)}>All</button>
+    <button className="btn btn-outline-dark" onClick={() => filterProduct("men's clothing")}>Men's Clothing</button>
+    <button className="btn btn-outline-dark" onClick={() => filterProduct("women's clothing")}>Women's Clothing</button>
+    <button className="btn btn-outline-dark" onClick={() => filterProduct("electronics")}>Electronic</button>
+    <button className="btn btn-outline-dark" onClick={() => filterProduct("jewelery")}>Jewelery</button>
+</div>
+
                 {filter.map((product) => {
                     return (
                         <div className='col-md-3 mb-4' key={product.id}>
